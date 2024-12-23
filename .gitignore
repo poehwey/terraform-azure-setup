@@ -1,0 +1,33 @@
+# Terraform state files and backups
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+
+# Terraform plan files
+*.tfplan
+
+# Directory for Terraform providers
+.terraform/
+
+# Terraform lock file (optional to ignore)
+*.terraform.lock.hcl
+
+# Log files
+*.log
+
+# Exclude temporary files (e.g., created by editors or OS)
+*.swp
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Ignore artifacts created by GitHub Actions
+release.zip
+
+# Exclude your IDE configurations (optional)
+.idea/
+.vscode/
+*.code-workspace
