@@ -1,37 +1,29 @@
-variable "environment" {
-  description = "Deployment environment (dev or prod)"
+variable "location" {
+  description = "Azure region for resources"
   type        = string
 }
 
-variable "resource_name_prefix" {
-  description = "Prefix for all resources"
+variable "environment" {
+  description = "Environment name (dev or prod)"
   type        = string
-  default     = "quetstroey"
 }
 
 variable "subnet_cidr" {
-  description = "CIDR block for subnets"
-  type        = map(string)
-  default     = {
-    dev  = "172.16.30.0/24"
-    prod = "172.16.35.0/24"
-  }
+  description = "CIDR block for the subnet"
+  type        = string
 }
 
-variable "app_service_sku" {
-  description = "App Service Plan SKU"
+variable "app_service_name" {
+  description = "Name of the App Service"
   type        = string
+}
+
+variable "app_service_plan_sku" {
+  description = "SKU for the App Service plan"
   default     = "F1"
 }
 
-variable "app_service_os" {
-  description = "App Service OS"
-  type        = string
-  default     = "Linux"
-}
-
-variable "dotnet_version" {
-  description = "DotNet runtime version"
-  type        = string
-  default     = "dotnet|8.0"
+variable "app_service_runtime" {
+  description = "Runtime for the App Service"
+  default     = "DOTNET|8.0"
 }

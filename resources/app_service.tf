@@ -1,28 +1,26 @@
-resource "azurerm_app_service_plan" "main" {
-  name                = "${var.resource_name_prefix}-appplan-${terraform.workspace}"
-  location            = local.location
-  resource_group_name = azurerm_resource_group.main.name
-  kind                = var.app_service_os
+resource "azurerm_app_service_plan" "asp" {
+  name                = "quetstroey-asp-${var.resources.environment}-${replace(var.resources.location, " ", "")}-01"
+  location            = var.resources.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "Linux"
+
   sku {
     tier = "Free"
-    size = var.app_service_sku
+    size = var.resources.app_service_plan_sku
   }
 }
 
-resource "azurerm_app_service" "main" {
-  name                = "${var.resource_name_prefix}-app-${terraform.workspace}"
-  location            = local.location
-  resource_group_name = azurerm_resource_group.main.name
-  app_service_plan_id = azurerm_app_service_plan.main.id
+resource "azurerm_app_service" "web_app" {
+  name                = var.resources.app_service_name
+  location            = var.resources.location
+  resource_group_name = azurerm_resource_group.rg.name
+  app_service_plan_id = azurerm_app_service_plan.asp.id
 
-  https_only = true
   site_config {
-    min_tls_version = "1.2"
+    dotnet_framework_version = var.resources.app_service_runtime
+    ftps_state               = "Disabled"
   }
-  app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
-  }
-  identity {
-    type = "SystemAssigned"
-  }
+
+  https_only          = true
+  minimum_tls_version = "1.2"
 }
