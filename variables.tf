@@ -1,29 +1,26 @@
 variable "location" {
   description = "Azure region for resources"
   type        = string
+  default     = "North Europe"
 }
 
-variable "environment" {
-  description = "Environment name (dev or prod)"
+variable "app_service_sku" {
+  description = "SKU for the App Service Plan"
   type        = string
-}
-
-variable "subnet_cidr" {
-  description = "CIDR block for the subnet"
-  type        = string
-}
-
-variable "app_service_name" {
-  description = "Name of the App Service"
-  type        = string
-}
-
-variable "app_service_plan_sku" {
-  description = "SKU for the App Service plan"
   default     = "F1"
 }
 
-variable "app_service_runtime" {
-  description = "Runtime for the App Service"
-  default     = "DOTNET|8.0"
+variable "subnet_cidr" {
+  description = "Subnet CIDR block"
+  type        = map(string)
+  default = {
+    development = "172.16.30.0/24"
+    production  = "172.16.35.0/24"
+  }
+}
+
+variable "project_prefix" {
+  description = "Prefix for all resource names"
+  type        = string
+  default     = "quetstroey"
 }

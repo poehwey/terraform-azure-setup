@@ -1,20 +1,23 @@
+provider "azurerm" {
+  features {}
+}
+
 terraform {
+  required_version = ">= 1.3.0"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
   }
-  required_version = ">= 1.5.0"
 
-  backend "azurerm" {
-    resource_group_name  = "quetstroey-tfstate"
-    storage_account_name = "quetstroeytfstate"
-    container_name       = "state"
-    key                  = "terraform.tfstate"
-  }
+  # Backend configuration (Optional: Use remote backend if needed)
 }
 
-provider "azurerm" {
-  features {}
+locals {
+  environment = terraform.workspace
+}
+
+output "environment" {
+  value = local.environment
 }
