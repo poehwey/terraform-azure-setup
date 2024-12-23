@@ -1,9 +1,9 @@
-name: Deploy to Staging
+name: Deploy to Production
 
 on:
   push:
     branches:
-      - staging
+      - production
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: staging-artifact
+          name: production-artifact
           path: output.zip
 
   deploy:
@@ -41,16 +41,16 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: staging-artifact
+          name: production-artifact
 
       - name: Authenticate to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Staging Web App
+      - name: Deploy to Production Web App
         run: |
           az webapp deploy \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP_STAGING }} \
-            --name ${{ secrets.AZURE_WEBAPP_NAME_STAGING }} \
+            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP_PRODUCTION }} \
+            --name ${{ secrets.AZURE_WEBAPP_NAME_PRODUCTION }} \
             --src-path output.zip
